@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://main_scene"]
+
+[ext_resource type="Script" path="res://src/main.gd"]
+
+[node name="Main" type="Node"]
+script = SubResource("GDScript_main")
+
+[sub_resource type="GDScript" id="GDScript_main"]
+script_class_name = "Main"
+resource_path = "res://src/main.gd"

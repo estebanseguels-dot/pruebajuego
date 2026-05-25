@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://enemy"]
+
+[ext_resource type="Script" path="res://src/characters/enemy/enemy_controller.gd"]
+
+[node name="Enemy" type="CharacterBody2D" groups=["enemy"]]
+script = ExtResource("Script_enemy")
+enemy_type = "Slime"
+health = 20
+level = 1
+speed = 60.0
+patrol_range = 100.0
+alert_distance = 150.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_enemy")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+# TODO: Cargar SpriteFrames desde archivo
+animation = "walk"
+play_on_ready = true
+
+[node name="DetectionArea" type="Area2D" parent="."]
+# Área para detectar al jugador
+collision_layer = 0
+collision_mask = 1  # Capa del jugador
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("CircleShape2D_detection")
+radius = 150.0  # Distancia de alerta
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_enemy"]
+radius = 8.0
+height = 20.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
+radius = 150.0
+
+[sub_resource type="GDScript" id="GDScript_enemy"]
+script_class_name = "EnemyController"
+resource_path = "res://src/characters/enemy/enemy_controller.gd"

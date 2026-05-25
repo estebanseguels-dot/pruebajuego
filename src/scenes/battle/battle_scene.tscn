@@ -1,0 +1,59 @@
+[gd_scene load_steps=2 format=3 uid="uid://battle_scene"]
+
+[ext_resource type="Script" path="res://src/scenes/battle/battle_controller.gd"]
+
+[node name="Battle" type="Node2D"]
+script = ExtResource("Script_battle")
+
+[node name="BattleBackground" type="ColorRect" parent="."]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color.DARK_SLATE_GRAY
+
+[node name="Camera2D" type="Camera2D" parent="."]
+enabled = true
+zoom = Vector2(1.5, 1.5)
+global_position = Vector2(160, 90)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+# TODO: Cargar música de batalla
+bus = "Music"
+
+[node name="BattleUI" type="Control" parent="."]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="PlayerHUD" type="VBoxContainer" parent="BattleUI"]
+position = Vector2(10, 10)
+
+[node name="PlayerNameLabel" type="Label" parent="BattleUI/PlayerHUD"]
+text = "[Player]"
+
+[node name="PlayerHPBar" type="ProgressBar" parent="BattleUI/PlayerHUD"]
+custom_minimum_size = Vector2(200, 20)
+
+[node name="ActionMenu" type="VBoxContainer" parent="BattleUI"]
+position = Vector2(10, 100)
+
+[node name="Button_Attack" type="Button" parent="BattleUI/ActionMenu"]
+text = "Attack"
+
+[node name="Button_Defend" type="Button" parent="BattleUI/ActionMenu"]
+text = "Defend"
+
+[node name="Button_Item" type="Button" parent="BattleUI/ActionMenu"]
+text = "Item"
+
+[node name="Button_Escape" type="Button" parent="BattleUI/ActionMenu"]
+text = "Escape"
+
+[node name="EnemyInfoContainer" type="VBoxContainer" parent="BattleUI"]
+position = Vector2(320, 10)
+
+[sub_resource type="GDScript" id="GDScript_battle"]
+script_class_name = "BattleController"
+resource_path = "res://src/scenes/battle/battle_controller.gd"

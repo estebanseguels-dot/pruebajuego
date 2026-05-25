@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://world_map"]
+
+[ext_resource type="Script" path="res://src/scenes/world_map/world_map_controller.gd"]
+[ext_resource type="PackedScene" path="res://src/scenes/world_map/player.tscn"]
+
+[node name="WorldMap" type="Node2D"]
+script = ExtResource("Script_controller")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+enabled = true
+zoom = Vector2(2, 2)
+global_smoothing_enabled = true
+
+[node name="TileMap" type="TileMap" parent="."]
+# TODO: Agregar TileSet y capas de tiles
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+bus = "Music"
+
+[node name="PlayerSpawn" type="Marker2D" parent="."]
+position = Vector2(100, 100)
+
+[node name="EnemySpawner" type="Node" parent="."]
+# Los enemigos se spawnean dinámicamente en _spawn_enemies()
+
+[sub_resource type="GDScript" id="GDScript_controller"]
+script_class_name = "WorldMapController"
+resource_path = "res://src/scenes/world_map/world_map_controller.gd"
