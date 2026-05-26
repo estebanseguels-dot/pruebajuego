@@ -1,40 +1,71 @@
-[gd_scene load_steps=3 format=3 uid="uid://enemy"]
+[gd_scene load_steps=6 format=3]
 
-[ext_resource type="Script" path="res://src/characters/enemy/enemy_controller.gd"]
+[ext_resource type="Script" path="res://src/characters/enemy/enemy_controller.gd" id="1"]
+[ext_resource type="Script" path="res://src/systems/combat/health_component.gd" id="2"]
+[ext_resource type="Script" path="res://src/systems/combat/hurtbox_component.gd" id="3"]
+[ext_resource type="Script" path="res://src/systems/combat/hitbox_component.gd" id="4"]
+[ext_resource type="Script" path="res://src/systems/ai/enemy_state_machine.gd" id="5"]
 
-[node name="Enemy" type="CharacterBody2D" groups=["enemy"]]
-script = ExtResource("Script_enemy")
-enemy_type = "Slime"
-health = 20
-level = 1
-speed = 60.0
-patrol_range = 100.0
-alert_distance = 150.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_enemy")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-# TODO: Cargar SpriteFrames desde archivo
-animation = "walk"
-play_on_ready = true
-
-[node name="DetectionArea" type="Area2D" parent="."]
-# Área para detectar al jugador
-collision_layer = 0
-collision_mask = 1  # Capa del jugador
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
-shape = SubResource("CircleShape2D_detection")
-radius = 150.0  # Distancia de alerta
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_enemy"]
+[sub_resource type="CapsuleShape2D" id=1]
 radius = 8.0
 height = 20.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 10.0
+height = 22.0
+
+[sub_resource type="CircleShape2D" id=3]
 radius = 150.0
 
-[sub_resource type="GDScript" id="GDScript_enemy"]
-script_class_name = "EnemyController"
-resource_path = "res://src/characters/enemy/enemy_controller.gd"
+[sub_resource type="RectangleShape2D" id=4]
+size = Vector2(28, 18)
+
+[node name="Enemy" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource(1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+animation = "walk_down"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="DetectionArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource(3)
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("2")
+max_health = 40
+
+[node name="HurtboxComponent" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+monitorable = true
+script = ExtResource("3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+shape = SubResource(2)
+
+[node name="HitboxComponent" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+monitoring = false
+monitorable = false
+script = ExtResource("4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(20, 0)
+shape = SubResource(4)
+
+[node name="EnemyStateMachine" type="Node" parent="."]
+script = ExtResource("5")
+
+[node name="VFX" type="Node2D" parent="."]

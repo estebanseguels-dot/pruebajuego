@@ -39,7 +39,7 @@ func initialize(data: Dictionary, is_player_char: bool = false) -> void:
 	is_player = is_player_char
 
 ## Calcula el daño infligido a otro personaje
-func calculate_damage(target: BattleCharacter) -> int:
+func calculate_damage(target) -> int:
 	# Fórmula básica de daño: (Ataque - Defensa del objetivo) + variación
 	var base_damage = attack - (target.defense * target.defense_multiplier)
 	var variation = randi() % (base_damage / 4) - (base_damage / 8)  # Variación ±12.5%

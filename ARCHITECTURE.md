@@ -28,13 +28,13 @@ Este proyecto implementa una arquitectura **limpia, escalable y desacoplada** pa
 │  - Estado global│    - Transiciones  │  - Audio Mgr  │
 │  - Persistencia │    - Carga escenas │  - Input Mgr  │
 └─────────────────────────────────────────────────────┘
-                        ↓
+						↓
 ┌─────────────────────────────────────────────────────┐
 │         CORE SYSTEMS LAYER                           │
 │  SceneController  │  BattleCharacter  │  Encounter  │
 │  - Lógica escenas │  - Stats combate  │  - Sistema  │
 └─────────────────────────────────────────────────────┘
-                        ↓
+						↓
 ┌─────────────────────────────────────────────────────┐
 │          PRESENTATION LAYER                          │
 │  UI Components  │  Animations  │  Visual Effects   │
@@ -91,9 +91,9 @@ juego/
 │           └── battle_ui.gd       # UI de batalla
 │
 └── assets/                        # Recursos (sprites, música, etc.)
-    ├── maps/
-    ├── music/
-    └── sprites/
+	├── maps/
+	├── music/
+	└── sprites/
 ```
 
 ---
@@ -107,20 +107,20 @@ juego/
 ```gdscript
 # Datos persistentes del jugador
 player_data: Dictionary = {
-    "hp": 100,
-    "max_hp": 100,
-    "exp": 0,
-    "level": 1,
-    "gold": 0,
-    "position": Vector2(100, 100)
+	"hp": 100,
+	"max_hp": 100,
+	"exp": 0,
+	"level": 1,
+	"gold": 0,
+	"position": Vector2(100, 100)
 }
 
 # Datos del encuentro actual
 current_encounter: Dictionary = {
-    "enemies": [],
-    "difficulty": 1,
-    "rewards_exp": 0,
-    "rewards_gold": 0
+	"enemies": [],
+	"difficulty": 1,
+	"rewards_exp": 0,
+	"rewards_gold": 0
 }
 ```
 
@@ -138,10 +138,10 @@ current_encounter: Dictionary = {
 
 ```gdscript
 enum TransitionType {
-    FADE,           # Fade to black
-    SLIDE_LEFT,     # Deslización izquierda
-    SLIDE_RIGHT,    # Deslización derecha
-    NONE            # Sin transición
+	FADE,           # Fade to black
+	SLIDE_LEFT,     # Deslización izquierda
+	SLIDE_RIGHT,    # Deslización derecha
+	NONE            # Sin transición
 }
 ```
 
@@ -253,7 +253,7 @@ walk_up, walk_down, walk_left, walk_right
 ```
 PATRULLA ──(detectar jugador)──> ALERTA ──(toque)──> COMBATE
    ↑_______________________________|
-        (jugador sale de rango)
+		(jugador sale de rango)
 ```
 
 ---
@@ -294,16 +294,16 @@ func is_defeated() -> bool
 │    - Jugador se mueve                                   │
 │    - Enemigos patrullan                                 │
 └─────────────────────────────────────────────────────────┘
-                        ↓
-            [Jugador toca enemigo]
-                        ↓
+						↓
+			[Jugador toca enemigo]
+						↓
 ┌─────────────────────────────────────────────────────────┐
 │ 2. DETECCIÓN (WorldMapController._on_interaction)       │
 │    - Verificar colisión                                 │
 │    - Guardar posición del jugador                       │
 │    - Llamar EnemyController.trigger_encounter()        │
 └─────────────────────────────────────────────────────────┘
-                        ↓
+						↓
 ┌─────────────────────────────────────────────────────────┐
 │ 3. TRANSICIÓN A BATALLA (GameManager.start_encounter) │
 │    - is_transitioning = true                            │
@@ -315,7 +315,7 @@ func is_defeated() -> bool
 │    - Emitir player_entered_battle                       │
 │    - is_transitioning = false                           │
 └─────────────────────────────────────────────────────────┘
-                        ↓
+						↓
 ┌─────────────────────────────────────────────────────────┐
 │ 4. COMBATE (BattleController)                           │
 │    - Inicializar personajes                             │
@@ -324,13 +324,13 @@ func is_defeated() -> bool
 │    - Turno de enemigos                                  │
 │    - Repetir hasta fin                                  │
 └─────────────────────────────────────────────────────────┘
-                        ↓
+						↓
 ┌─────────────────────────────────────────────────────────┐
 │ 5. FIN DE BATALLA (BattleController._end_battle)      │
 │    - Calcular recompensas                               │
 │    - GameManager.end_encounter(victory, exp, loot)     │
 └─────────────────────────────────────────────────────────┘
-                        ↓
+						↓
 ┌─────────────────────────────────────────────────────────┐
 │ 6. TRANSICIÓN A MUNDO (GameManager.end_encounter)      │
 │    - Actualizar player_data (exp, gold)                │
@@ -341,7 +341,7 @@ func is_defeated() -> bool
 │    - Restaurar HP jugador                               │
 │    - Fade in                                            │
 └─────────────────────────────────────────────────────────┘
-                        ↓
+						↓
 ┌─────────────────────────────────────────────────────────┐
 │ 7. DE VUELTA A EXPLORACIÓN                              │
 │    - Jugador continúa su aventura                       │
@@ -353,20 +353,20 @@ func is_defeated() -> bool
 ```gdscript
 # PlayerController
 func _on_interaction_area_entered(area: Area2D) -> void:
-    if area.is_in_group("enemy"):
-        # El enemigo dispara el encuentro
-        area.trigger_encounter()
+	if area.is_in_group("enemy"):
+		# El enemigo dispara el encuentro
+		area.trigger_encounter()
 
 # EnemyController
 func trigger_encounter() -> void:
-    var enemy_data = {
-        "type": enemy_type,
-        "level": level,
-        "health": health,
-        "max_health": health,
-    }
-    # GameManager maneja todo desde aquí
-    GameManager.start_encounter([enemy_data], level)
+	var enemy_data = {
+		"type": enemy_type,
+		"level": level,
+		"health": health,
+		"max_health": health,
+	}
+	# GameManager maneja todo desde aquí
+	GameManager.start_encounter([enemy_data], level)
 ```
 
 ---
@@ -389,19 +389,19 @@ func trigger_encounter() -> void:
 ```gdscript
 # En BattleCharacter
 func get_special_abilities() -> Array:
-    return [
-        {"name": "Fireball", "mp_cost": 15, "damage": 25},
-        {"name": "Heal", "mp_cost": 10, "healing": 20}
-    ]
+	return [
+		{"name": "Fireball", "mp_cost": 15, "damage": 25},
+		{"name": "Heal", "mp_cost": 10, "healing": 20}
+	]
 
 # En BattleController
 func execute_ability(ability_name: String) -> void:
-    match ability_name:
-        "Fireball":
-            var target = enemy_characters[target_index]
-            target.take_damage(25)
-        "Heal":
-            player_character.restore_health(20)
+	match ability_name:
+		"Fireball":
+			var target = enemy_characters[target_index]
+			target.take_damage(25)
+		"Heal":
+			player_character.restore_health(20)
 ```
 
 ### Agregar Sistema de Objetos
@@ -409,17 +409,17 @@ func execute_ability(ability_name: String) -> void:
 ```gdscript
 # En GameManager
 var inventory: Dictionary = {
-    "potion": 5,
-    "ether": 2,
-    "revive": 1
+	"potion": 5,
+	"ether": 2,
+	"revive": 1
 }
 
 # En BattleUI
 func use_item(item_name: String) -> void:
-    match item_name:
-        "potion":
-            player_character.restore_health(50)
-            GameManager.inventory["potion"] -= 1
+	match item_name:
+		"potion":
+			player_character.restore_health(50)
+			GameManager.inventory["potion"] -= 1
 ```
 
 ### Agregar Estadísticas de Equipo
@@ -427,17 +427,17 @@ func use_item(item_name: String) -> void:
 ```gdscript
 # En PlayerController
 var equipment: Dictionary = {
-    "weapon": "Iron Sword",  # +5 ATK
-    "armor": "Leather Armor", # +3 DEF
-    "accessory": "HP Ring"    # +20 MAX HP
+	"weapon": "Iron Sword",  # +5 ATK
+	"armor": "Leather Armor", # +3 DEF
+	"accessory": "HP Ring"    # +20 MAX HP
 }
 
 func get_stat_bonuses() -> Dictionary:
-    return {
-        "attack": 5,
-        "defense": 3,
-        "max_hp": 20
-    }
+	return {
+		"attack": 5,
+		"defense": 3,
+		"max_hp": 20
+	}
 ```
 
 ---
@@ -485,9 +485,9 @@ enemy_defeated.connect(_on_enemy_defeated, CONNECT_ONE_SHOT)
 ## @param param2 Descripción
 ## @return Tipo de retorno
 func my_function(param1: String, param2: int) -> bool:
-    # Comentario inline para lógica compleja
-    var result = expensive_calculation()
-    return result > 0
+	# Comentario inline para lógica compleja
+	var result = expensive_calculation()
+	return result > 0
 ```
 
 ### 4. **Gestión de Memoria**
@@ -495,13 +495,13 @@ func my_function(param1: String, param2: int) -> bool:
 ```gdscript
 # ✅ CORRECTO: Liberar referencias
 func _exit_tree() -> void:
-    # Desconectar señales
-    for signal_connection in get_signal_connections():
-        disconnect(signal_connection.signal.get_name(), ...)
-    
-    # Liberar recursos
-    if music_player:
-        music_player.stop()
+	# Desconectar señales
+	for signal_connection in get_signal_connections():
+		disconnect(signal_connection.signal.get_name(), ...)
+	
+	# Liberar recursos
+	if music_player:
+		music_player.stop()
 
 # ❌ INCORRECTO: Dejar referencias colgantes
 # (Puede causar memory leaks)
@@ -512,27 +512,27 @@ func _exit_tree() -> void:
 ```gdscript
 # Para lógica compleja, usar enum
 enum EnemyState {
-    IDLE,
-    PATROL,
-    CHASE,
-    ATTACK,
-    DEAD
+	IDLE,
+	PATROL,
+	CHASE,
+	ATTACK,
+	DEAD
 }
 
 var current_state: EnemyState = EnemyState.IDLE
 
 func _process(delta: float) -> void:
-    match current_state:
-        EnemyState.IDLE:
-            _handle_idle(delta)
-        EnemyState.PATROL:
-            _handle_patrol(delta)
-        EnemyState.CHASE:
-            _handle_chase(delta)
-        EnemyState.ATTACK:
-            _handle_attack(delta)
-        EnemyState.DEAD:
-            _handle_dead(delta)
+	match current_state:
+		EnemyState.IDLE:
+			_handle_idle(delta)
+		EnemyState.PATROL:
+			_handle_patrol(delta)
+		EnemyState.CHASE:
+			_handle_chase(delta)
+		EnemyState.ATTACK:
+			_handle_attack(delta)
+		EnemyState.DEAD:
+			_handle_dead(delta)
 ```
 
 ---

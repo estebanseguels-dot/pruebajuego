@@ -1,0 +1,209 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://src/scenes/main_menu/main_menu.gd" id="1"]
+[ext_resource type="Script" path="res://src/scenes/main_menu/options_menu.gd" id="2"]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color(0.12, 0.12, 0.18, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.6, 0.55, 0.4, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="MainMenu" type="CanvasLayer"]
+layer = 128
+script = ExtResource("1")
+
+[node name="Background" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.04, 0.04, 0.08, 1)
+
+[node name="BgParticles" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.08, 0.06, 0.15, 0.3)
+
+[node name="Title" type="Label" parent="."]
+anchors_preset = 0
+offset_left = 300
+offset_top = 60
+size = Vector2(600, 60)
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_colors/font_color = Color(0.85, 0.8, 0.6, 1)
+theme_override_font_sizes/font_size = 32
+text = "RETRO RPG ADVENTURE"
+
+[node name="Subtitle" type="Label" parent="."]
+anchors_preset = 0
+offset_left = 300
+offset_top = 120
+size = Vector2(600, 30)
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_colors/font_color = Color(0.5, 0.5, 0.6, 0.8)
+theme_override_font_sizes/font_size = 16
+text = "— Una Aventura RPG —"
+
+[node name="VBox" type="VBoxContainer" parent="."]
+anchors_preset = 0
+offset_left = 380
+offset_top = 220
+size = Vector2(440, 200)
+
+[node name="NewGameBtn" type="Button" parent="VBox"]
+size = Vector2(440, 50)
+theme_override_font_sizes/font_size = 20
+text = "NUEVA PARTIDA"
+
+[node name="LoadGameBtn" type="Button" parent="VBox"]
+size = Vector2(440, 50)
+theme_override_font_sizes/font_size = 20
+text = "CARGAR PARTIDA"
+
+[node name="OptionsBtn" type="Button" parent="VBox"]
+size = Vector2(440, 50)
+theme_override_font_sizes/font_size = 20
+text = "OPCIONES"
+
+[node name="OptionsMenu" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+script = ExtResource("2")
+
+[node name="OverlayBg" type="ColorRect" parent="OptionsMenu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.6)
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="OptionsMenu"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220
+offset_top = -150
+offset_right = 220
+offset_bottom = 150
+theme_override_styles/panel = SubResource(1)
+
+[node name="Body" type="VBoxContainer" parent="OptionsMenu/Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20
+offset_top = 20
+offset_right = -20
+offset_bottom = -20
+
+[node name="OptionsTitle" type="Label" parent="OptionsMenu/Panel/Body"]
+size = Vector2(400, 30)
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(0.9, 0.85, 0.65, 1)
+horizontal_alignment = 1
+text = "OPCIONES"
+
+[node name="FrameRow" type="HBoxContainer" parent="OptionsMenu/Panel/Body"]
+size = Vector2(400, 40)
+
+[node name="Label" type="Label" parent="OptionsMenu/Panel/Body/FrameRow"]
+size = Vector2(180, 40)
+theme_override_font_sizes/font_size = 16
+vertical_alignment = 1
+text = "Marco de texto:"
+
+[node name="Prev" type="Button" parent="OptionsMenu/Panel/Body/FrameRow"]
+size = Vector2(40, 40)
+text = "<"
+
+[node name="Value" type="Label" parent="OptionsMenu/Panel/Body/FrameRow"]
+size = Vector2(160, 40)
+theme_override_font_sizes/font_size = 16
+vertical_alignment = 1
+horizontal_alignment = 1
+text = "Clásico"
+
+[node name="Next" type="Button" parent="OptionsMenu/Panel/Body/FrameRow"]
+size = Vector2(40, 40)
+text = ">"
+
+[node name="BgRow" type="HBoxContainer" parent="OptionsMenu/Panel/Body"]
+size = Vector2(400, 40)
+
+[node name="Label" type="Label" parent="OptionsMenu/Panel/Body/BgRow"]
+size = Vector2(180, 40)
+theme_override_font_sizes/font_size = 16
+vertical_alignment = 1
+text = "Fondo de texto:"
+
+[node name="Prev" type="Button" parent="OptionsMenu/Panel/Body/BgRow"]
+size = Vector2(40, 40)
+text = "<"
+
+[node name="Value" type="Label" parent="OptionsMenu/Panel/Body/BgRow"]
+size = Vector2(160, 40)
+theme_override_font_sizes/font_size = 16
+vertical_alignment = 1
+horizontal_alignment = 1
+text = "Oscuro"
+
+[node name="Next" type="Button" parent="OptionsMenu/Panel/Body/BgRow"]
+size = Vector2(40, 40)
+text = ">"
+
+[node name="Preview" type="Panel" parent="OptionsMenu/Panel/Body"]
+size = Vector2(400, 70)
+
+[node name="FrameBg" type="Panel" parent="OptionsMenu/Panel/Body/Preview"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4
+offset_top = 4
+offset_right = -4
+offset_bottom = -4
+mouse_filter = 2
+
+[node name="TextBoxBg" type="ColorRect" parent="OptionsMenu/Panel/Body/Preview"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6
+offset_top = 6
+offset_right = -6
+offset_bottom = -6
+color = Color(0.08, 0.08, 0.12, 0.92)
+
+[node name="PreviewLabel" type="Label" parent="OptionsMenu/Panel/Body/Preview"]
+anchors_preset = 0
+offset_left = 16
+offset_top = 8
+size = Vector2(368, 54)
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+theme_override_font_sizes/font_size = 14
+vertical_alignment = 1
+text = "Así se verá el texto dentro del cuadro de diálogo."
+
+[node name="BackBtn" type="Button" parent="OptionsMenu/Panel/Body"]
+size = Vector2(400, 40)
+theme_override_font_sizes/font_size = 18
+text = "VOLVER"
+
+[connection signal="pressed" from="VBox/NewGameBtn" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="VBox/LoadGameBtn" to="." method="_on_load_game_pressed"]
+[connection signal="pressed" from="VBox/OptionsBtn" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="OptionsMenu/Panel/Body/FrameRow/Prev" to="OptionsMenu" method="_on_frame_prev_pressed"]
+[connection signal="pressed" from="OptionsMenu/Panel/Body/FrameRow/Next" to="OptionsMenu" method="_on_frame_next_pressed"]
+[connection signal="pressed" from="OptionsMenu/Panel/Body/BgRow/Prev" to="OptionsMenu" method="_on_bg_prev_pressed"]
+[connection signal="pressed" from="OptionsMenu/Panel/Body/BgRow/Next" to="OptionsMenu" method="_on_bg_next_pressed"]
+[connection signal="pressed" from="OptionsMenu/Panel/Body/BackBtn" to="OptionsMenu" method="_on_back_pressed"]
